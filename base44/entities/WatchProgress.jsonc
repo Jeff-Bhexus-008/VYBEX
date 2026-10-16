@@ -1,0 +1,70 @@
+{
+  "name": "WatchProgress",
+  "type": "object",
+  "properties": {
+    "video_id": {
+      "type": "string",
+      "description": "Video reference (VYBEX record id, or provider:id for external videos)"
+    },
+    "video_slug": {
+      "type": "string",
+      "description": "Video slug (denormalized)"
+    },
+    "video_title": {
+      "type": "string",
+      "description": "Video title (denormalized)"
+    },
+    "video_thumbnail": {
+      "type": "string",
+      "description": "Video artwork (denormalized)"
+    },
+    "video_category": {
+      "type": "string",
+      "description": "Video category (denormalized)"
+    },
+    "provider": {
+      "type": "string",
+      "enum": [
+        "vybex",
+        "youtube"
+      ],
+      "default": "vybex",
+      "description": "Where the watched video comes from"
+    },
+    "provider_video_id": {
+      "type": "string",
+      "description": "The provider's own video identifier, when played from YouTube"
+    },
+    "position_seconds": {
+      "type": "number",
+      "description": "Latest playback position"
+    },
+    "duration_seconds": {
+      "type": "number",
+      "description": "Known media duration"
+    },
+    "completed": {
+      "type": "boolean",
+      "default": false,
+      "description": "Playback reached the end"
+    }
+  },
+  "required": [
+    "video_id",
+    "video_slug"
+  ],
+  "rls": {
+    "read": {
+      "created_by_id": "{{user.id}}"
+    },
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "created_by_id": "{{user.id}}"
+    },
+    "delete": {
+      "created_by_id": "{{user.id}}"
+    }
+  }
+}

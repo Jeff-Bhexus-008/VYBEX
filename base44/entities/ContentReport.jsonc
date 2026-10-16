@@ -1,0 +1,90 @@
+{
+  "name": "ContentReport",
+  "type": "object",
+  "properties": {
+    "video_id": {
+      "type": "string",
+      "description": "Reported video reference"
+    },
+    "video_slug": {
+      "type": "string",
+      "description": "Reported video slug (denormalized)"
+    },
+    "video_title": {
+      "type": "string",
+      "description": "Reported video title (denormalized)"
+    },
+    "reason": {
+      "type": "string",
+      "enum": [
+        "copyright",
+        "inappropriate",
+        "misleading",
+        "broken",
+        "other"
+      ],
+      "description": "Report reason"
+    },
+    "description": {
+      "type": "string",
+      "description": "Reporter details"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "open",
+        "resolved",
+        "dismissed"
+      ],
+      "default": "open",
+      "description": "Handling status"
+    },
+    "resolution_note": {
+      "type": "string",
+      "description": "Moderator resolution note"
+    }
+  },
+  "required": [
+    "video_id",
+    "video_slug",
+    "reason"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "user"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 258 10% 7%;
+    --foreground: 260 20% 96%;
+    --card: 258 8% 10%;
+    --card-foreground: 260 20% 96%;
+    --popover: 258 9% 9%;
+    --popover-foreground: 260 20% 96%;
+    --primary: 353 82% 56%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 258 7% 14%;
+    --secondary-foreground: 260 20% 96%;
+    --muted: 258 7% 13%;
+    --muted-foreground: 257 8% 62%;
+    --accent: 258 8% 17%;
+    --accent-foreground: 260 20% 96%;
+    --destructive: 28 88% 56%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 258 6% 16%;
+    --input: 258 6% 20%;
+    --ring: 353 82% 56%;
+    --chart-1: 353 82% 56%;
+    --chart-2: 258 55% 62%;
+    --chart-3: 200 80% 60%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 160 60% 50%;
+    --radius: 0.85rem;
+    --font-heading: "Sora", "Inter", ui-sans-serif, system-ui, sans-serif;
+    --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+    --font-display: "Sora", "Inter", ui-sans-serif, system-ui, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --glow: 353 82% 56%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  ::selection {
+    background: hsl(var(--primary) / 0.35);
+    color: #fff;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .pb-safe {
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 5rem);
+  }
+  .pb-safe-nav {
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 4.25rem);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .glow-primary {
+    box-shadow: 0 0 0 1px hsl(var(--primary) / 0.25), 0 8px 40px -12px hsl(var(--primary) / 0.55);
+  }
+  .glow-soft {
+    box-shadow: 0 18px 60px -24px hsl(var(--glow) / 0.45);
+  }
+  .mask-fade-r {
+    -webkit-mask-image: linear-gradient(to right, #000 88%, transparent 100%);
+    mask-image: linear-gradient(to right, #000 88%, transparent 100%);
+  }
+}

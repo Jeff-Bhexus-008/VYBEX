@@ -1,0 +1,200 @@
+{
+  "name": "Video",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Display title"
+    },
+    "slug": {
+      "type": "string",
+      "description": "URL-safe unique identifier"
+    },
+    "description": {
+      "type": "string",
+      "description": "Short synopsis"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "anime",
+        "animation",
+        "short",
+        "comedy",
+        "music",
+        "sports",
+        "movies",
+        "educational",
+        "kids"
+      ],
+      "description": "Primary content category"
+    },
+    "genres": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Tags and genres"
+    },
+    "thumbnail_url": {
+      "type": "string",
+      "description": "Portrait/landscape card artwork URL"
+    },
+    "banner_url": {
+      "type": "string",
+      "description": "Large hero artwork URL"
+    },
+    "media_url": {
+      "type": "string",
+      "description": "Playable media URL or private storage reference"
+    },
+    "content_type": {
+      "type": "string",
+      "enum": [
+        "video",
+        "short",
+        "trailer"
+      ],
+      "description": "Format of the content"
+    },
+    "creator_name": {
+      "type": "string",
+      "description": "Creator or uploader display name"
+    },
+    "visibility": {
+      "type": "string",
+      "enum": [
+        "public",
+        "private"
+      ],
+      "default": "private",
+      "description": "Public visibility"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "published",
+        "rejected",
+        "draft"
+      ],
+      "default": "pending",
+      "description": "Publication / moderation status"
+    },
+    "downloadable": {
+      "type": "boolean",
+      "default": false,
+      "description": "Uploader has authorized offline downloads of the media file"
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false,
+      "description": "Shown in the hero carousel"
+    },
+    "upcoming": {
+      "type": "boolean",
+      "default": false,
+      "description": "Announced title with no playable source yet"
+    },
+    "release_year": {
+      "type": "integer",
+      "description": "Verified release year, when known"
+    },
+    "duration_seconds": {
+      "type": "number",
+      "description": "Duration when known"
+    },
+    "language": {
+      "type": "string",
+      "description": "Primary language"
+    },
+    "age_rating": {
+      "type": "string",
+      "description": "Age classification where appropriate"
+    },
+    "source_label": {
+      "type": "string",
+      "description": "Source/provider attribution"
+    },
+    "is_demo": {
+      "type": "boolean",
+      "default": false,
+      "description": "Clearly labeled demonstration record"
+    },
+    "moderation_note": {
+      "type": "string",
+      "description": "Reviewer note on a moderated submission"
+    }
+  },
+  "required": [
+    "title",
+    "slug",
+    "category",
+    "status",
+    "visibility"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "$and": [
+            {
+              "data.status": "published"
+            },
+            {
+              "data.visibility": "public"
+            }
+          ]
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "role": "user"
+              }
+            },
+            {
+              "data.status": {
+                "$ne": "published"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}
